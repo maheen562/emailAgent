@@ -43,7 +43,7 @@ cd server && npm test
 
 ## Project status
 - [x] M1: Scaffolding, health endpoints, tests
-- [ ] M2: Email ingestion (demo samples + Gmail API)
+- [x] M2: Email ingestion (demo samples + Gmail API + IMAP backup)
 - [ ] M3: LLM summariser and scorer (Gemini / Ollama)
 - [ ] M4: Platform storage, pipeline and dedupe
 - [ ] M5: Dashboard

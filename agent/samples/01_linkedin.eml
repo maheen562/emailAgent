@@ -1,0 +1,49 @@
+From: LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>
+To: demo.user@example.com
+Subject: 4 new jobs for "software engineer intern" in Islamabad
+Date: Sat, 07 Nov 2026 08:15:00 +0500
+Message-ID: <demo-linkedin-20261107@example.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<html>
+<head><style>.job{font-family:Arial;margin:12px 0}</style><title>LinkedIn Job Alert</title></head>
+<body>
+<table width="600">
+<tr><td><h2>Your job alert for software engineer intern in Islamabad</h2></td></tr>
+<tr><td>
+  <div class="job">
+    <a href="https://www.linkedin.com/comm/jobs/view/4100000001/?trackingId=Ab12Cd34Ef56Gh78&amp;refId=xyz&amp;midToken=AQE1234567890&amp;trk=eml-email_job_alert_digest_01">Python Automation Intern</a>
+    <p>Nimbus Labs &middot; Islamabad, Pakistan (Remote)</p>
+    <p>Paid internship (PKR 60,000/month). Build Python scripts and API integrations that automate client workflows. Students and fresh graduates welcome; 0-1 years experience. Skills: Python, REST APIs, Git. 40 hours/week, 3 months with a possible full-time offer.</p>
+    <p>Actively recruiting &middot; 2 days ago</p>
+  </div>
+  <div class="job">
+    <a href="https://www.linkedin.com/comm/jobs/view/4100000002/?trackingId=Zx98Yw76Vu54Ts32&amp;refId=abc&amp;trk=eml-email_job_alert_digest_02">Senior Backend Engineer (Node.js)</a>
+    <p>Crestline Systems &middot; Lahore, Pakistan (Hybrid)</p>
+    <p>Lead the design of distributed Node.js microservices. 5+ years of professional backend experience required, including Kubernetes and Kafka. Mentoring a team of 4.</p>
+    <p>Be an early applicant &middot; 1 day ago</p>
+  </div>
+  <div class="job">
+    <a href="https://www.linkedin.com/comm/jobs/view/4100000003/?trackingId=Qq11Ww22Ee33Rr44&amp;refId=def&amp;trk=eml-email_job_alert_digest_03">Junior Full Stack Developer</a>
+    <p>Tarbela Tech &middot; Rawalpindi, Pakistan (On-site)</p>
+    <p>PKR 80,000 - 120,000/month. React, Node.js, PostgreSQL. 1+ year experience preferred, strong fresh graduates considered. Monday to Saturday, 9am-6pm.</p>
+    <p>3 days ago</p>
+  </div>
+  <div class="job">
+    <a href="https://www.linkedin.com/comm/jobs/view/4100000004/?trackingId=Mm55Nn66Bb77Vv88&amp;refId=ghi&amp;trk=eml-email_job_alert_digest_04">AI Engineer Intern</a>
+    <p>Koh Digital &middot; Remote</p>
+    <p>Work with LLM APIs and prompt engineering on a US-based product team. Hours: 6pm-3am PKT to overlap with US Eastern time. Stipend not disclosed. Python required; experience with LangChain a plus.</p>
+    <p>5 days ago</p>
+  </div>
+</td></tr>
+<tr><td>
+  <p><a href="https://www.linkedin.com/comm/jobs/search/?keywords=software%20engineer%20intern&amp;location=Islamabad">See all jobs</a></p>
+  <p>You are receiving Job Alert emails. <a href="https://www.linkedin.com/comm/jobs/alerts?unsubscribe=1">Unsubscribe</a> &middot; <a href="https://www.linkedin.com/help">Help</a></p>
+  <p>This email was intended for Demo User. LinkedIn Corporation, 1000 W Maude Ave, Sunnyvale, CA 94085.</p>
+  <img src="https://www.linkedin.com/emimp/ip_tracking_pixel.gif" width="1" height="1" alt="">
+</td></tr>
+</table>
+</body>
+</html>

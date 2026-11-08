@@ -1,0 +1,42 @@
+From: Rozee.pk <jobs@rozee.pk>
+To: demo.user@example.com
+Subject: Jobs matching your profile: Software Engineer
+Date: Thu, 05 Nov 2026 10:05:00 +0500
+Message-ID: <demo-rozee-20261105@example.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="ROZEE_BOUNDARY"
+
+--ROZEE_BOUNDARY
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Jobs matching your profile
+
+MERN Stack Intern - Pixel Orchard - Islamabad (Hybrid)
+Unpaid internship, 6 months, certificate provided.
+
+Associate Software Engineer (Python) - Saffron Analytics - Islamabad (Remote)
+PKR 150,000/month, fresh graduates.
+
+--ROZEE_BOUNDARY
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<html><body>
+<h3>Jobs matching your profile</h3>
+<table>
+<tr><td>
+  <a href="https://www.rozee.pk/job/jsid/2000001?utm_source=jobalert&amp;utm_medium=email&amp;utm_campaign=daily">MERN Stack Intern</a>
+  <div>Pixel Orchard | Islamabad (Hybrid, 3 days in office)</div>
+  <div>Unpaid internship, 6 months, certificate provided on completion. MongoDB, Express, React, Node.js. Full-time hours (45/week).</div>
+</td></tr>
+<tr><td>
+  <a href="https://www.rozee.pk/job/jsid/2000002?utm_source=jobalert&amp;utm_medium=email&amp;utm_campaign=daily">Associate Software Engineer (Python)</a>
+  <div>Saffron Analytics | Islamabad (Remote)</div>
+  <div>PKR 150,000/month plus health insurance. Fresh graduates or final-year students with strong Python, SQL and Git. Build data pipelines and REST APIs with FastAPI. Apply by 30 Nov 2026.</div>
+</td></tr>
+</table>
+<p>You received this email because you subscribed to Rozee.pk job alerts. <a href="https://www.rozee.pk/alerts/unsubscribe?u=999">Unsubscribe</a></p>
+</body></html>
+
+--ROZEE_BOUNDARY--
