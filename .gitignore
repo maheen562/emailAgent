@@ -1,0 +1,24 @@
+# Secrets: never commit these
+.env
+agent/credentials.json
+agent/token.json
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node
+node_modules/
+
+# Local data
+*.db
+*.db-journal
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Job Alert Agent</title>
+</head>
+<body>
+  <h1>Job Alert Agent</h1>
+  <p id="status">Checking services…</p>
+  <script>
+    // Placeholder page for M1; the real dashboard comes in M5.
+    fetch('/api/health')
+      .then((r) => r.json())
+      .then((h) => {
+        const a = h.agent;
+        const llm = a.llm_configured ? a.llm_provider : `${a.llm_provider} (no API key yet)`;
+        document.getElementById('status').textContent = a.reachable
+          ? `Platform OK · Agent OK · email: ${a.email_provider} · LLM: ${llm}`
+          : `Platform OK · Agent unreachable: ${a.error}`;
+      });
+  </script>
+</body>
+</html>

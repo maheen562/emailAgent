@@ -1,0 +1,19 @@
+# Web API
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.8
+pydantic-settings>=2.4
+
+# Email parsing (M2)
+beautifulsoup4>=4.12
+
+# Gmail API (M2)
+google-api-python-client>=2.140
+google-auth-oauthlib>=1.2
+
+# LLM providers (M3)
+google-genai>=1.0
+httpx>=0.27          # also used to call Ollama's local HTTP API
+
+# Dev / tests
+pytest>=8.3
