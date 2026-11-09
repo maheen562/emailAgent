@@ -68,8 +68,9 @@ def summarize_email(
 ) -> SummarizeResponse:
     """Extract every job in one email and judge how useful each is for the profile.
 
-    Errors tell the caller what to do: 429 = retry later, 503 = fix the setup,
-    502 = the model misbehaved for this email (skip it and record the error).
+    Errors tell the caller what to do: 429 = retry later (rate limit or provider
+    overloaded), 503 = fix the setup, 502 = the model misbehaved for this email
+    (skip it and record the error).
     """
     try:
         return summarize(request.email, request.profile, llm)

@@ -17,6 +17,10 @@ class LLMRateLimited(LLMError):
         self.retry_after_seconds = retry_after_seconds
 
 
+class LLMOverloaded(LLMRateLimited):
+    """The provider is temporarily overloaded (e.g. Gemini 503). Also safe to retry later."""
+
+
 class LLMUnavailable(LLMError):
     """The provider can't be reached or isn't configured (no key, Ollama not running)."""
 
@@ -48,14 +52,23 @@ def inline_schema(schema: dict[str, Any]) -> dict[str, Any]:
     defs = schema.pop("$defs", {})
 
     def resolve(node: Any) -> Any:
-        if isinstance(node, dict):
-            if "$ref" in node:
-                name = node["$ref"].split("/")[-1]
-                merged = {**defs[name], **{k: v for k, v in node.items() if k != "$ref"}}
-                return resolve(merged)
-            return {k: resolve(v) for k, v in node.items() if k != "title"}
         if isinstance(node, list):
             return [resolve(item) for item in node]
-        return node
+        if not isinstance(node, dict):
+            return node
+        if "$ref" in node:
+            name = node["$ref"].split("/")[-1]
+            merged = {**defs[name], **{k: v for k, v in node.items() if k != "$ref"}}
+            return resolve(merged)
+        out = {}
+        for key, value in node.items():
+            if key == "title":
+                continue  # a schema annotation, not data
+            if key == "properties":
+                # Keys here are field names: a field may itself be called "title".
+                out[key] = {name: resolve(sub) for name, sub in value.items()}
+            else:
+                out[key] = resolve(value)
+        return out
 
     return resolve(schema)

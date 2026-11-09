@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     # Which LLM judges the jobs.
     llm_provider: Literal["gemini", "ollama"] = "gemini"
     gemini_api_key: str | None = None
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.5-flash"
     ollama_url: str = "http://localhost:11434"
     ollama_model: str = "qwen2.5:7b"
 

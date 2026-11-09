@@ -7,8 +7,8 @@ from google.genai import errors
 
 from app.config import Settings
 from app.llm import get_llm
-from app.llm.base import LLMError, LLMRateLimited, LLMUnavailable, inline_schema
-from app.llm.gemini import GeminiProvider
+from app.llm.base import LLMError, LLMOverloaded, LLMRateLimited, LLMUnavailable, inline_schema
+from app.llm.gemini import GeminiProvider, default_http_options
 from app.llm.ollama import OllamaProvider
 
 SCHEMA = {"type": "object", "properties": {"jobs": {"type": "array"}}}
@@ -57,12 +57,33 @@ class TestGemini:
             GeminiProvider(api_key=None, model="m")
 
     @pytest.mark.parametrize(
-        ("code", "expected"), [(429, LLMRateLimited), (403, LLMUnavailable), (500, LLMError)]
+        ("code", "expected"),
+        [
+            (429, LLMRateLimited),
+            (503, LLMOverloaded),
+            (500, LLMOverloaded),
+            (403, LLMUnavailable),
+            (404, LLMUnavailable),
+            (400, LLMError),
+        ],
     )
     def test_maps_api_errors(self, code, expected):
         provider, _ = gemini_with(error=api_error(code))
         with pytest.raises(expected):
             provider.generate_json(system="s", prompt="p", schema=SCHEMA)
+
+    def test_bad_request_is_a_plain_error_not_retry_later(self):
+        provider, _ = gemini_with(error=api_error(400))
+        with pytest.raises(LLMError) as info:
+            provider.generate_json(system="s", prompt="p", schema=SCHEMA)
+        assert not isinstance(info.value, LLMRateLimited)
+
+    def test_client_retries_transient_errors_with_a_timeout(self):
+        options = default_http_options(timeout_seconds=90)
+        assert options.timeout == 90_000
+        assert options.retry_options.attempts == 3
+        assert 503 in options.retry_options.http_status_codes
+        assert 429 not in options.retry_options.http_status_codes
 
     def test_empty_response_is_an_error(self):
         provider, _ = gemini_with(result=SimpleNamespace(text=None, usage_metadata=None))
@@ -116,6 +137,20 @@ class TestInlineSchema:
         assert flat["properties"]["a"] == {"type": "object", "properties": {"x": {"type": "integer"}}}
         assert flat["properties"]["b"]["items"] == flat["properties"]["a"]
         assert "$defs" not in flat and "title" not in flat
+
+    def test_keeps_a_field_named_title(self):
+        # Regression: Gemini rejected the schema when the job's `title` field was stripped.
+        schema = {
+            "title": "Job",
+            "type": "object",
+            "properties": {"title": {"title": "Title", "type": "string"}},
+            "required": ["title"],
+        }
+        assert inline_schema(schema) == {
+            "type": "object",
+            "properties": {"title": {"type": "string"}},
+            "required": ["title"],
+        }
 
 
 class TestGetLlm:

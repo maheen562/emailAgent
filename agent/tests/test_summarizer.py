@@ -68,6 +68,24 @@ def test_email_with_no_jobs():
     assert result.one_line_summary == "No job postings found in this email."
 
 
+def _objects(node):
+    if isinstance(node, dict):
+        if node.get("type") == "object":
+            yield node
+        for value in node.values():
+            yield from _objects(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _objects(item)
+
+
+def test_every_required_field_is_defined():
+    # Gemini rejects a schema whose `required` names a property it doesn't define.
+    for obj in _objects(SCHEMA):
+        missing = set(obj.get("required", [])) - set(obj.get("properties", {}))
+        assert not missing, f"required but undefined: {missing}"
+
+
 def test_schema_is_flat_json_schema():
     text = json.dumps(SCHEMA)
     assert "$ref" not in text and "$defs" not in text
