@@ -6,8 +6,10 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from app import __version__
 from app.config import Settings, get_settings
-from app.models import EmailsResponse
+from app.llm import LLMError, LLMProvider, LLMRateLimited, LLMUnavailable, get_llm
+from app.models import EmailsResponse, SummarizeRequest, SummarizeResponse
 from app.providers import EmailProvider, ProviderNotConfigured, get_provider
+from app.summarizer import summarize
 
 app = FastAPI(
     title="Job Alert Agent",
@@ -20,6 +22,13 @@ def provider_dependency(settings: Settings = Depends(get_settings)) -> EmailProv
     try:
         return get_provider(settings)
     except ProviderNotConfigured as err:
+        raise HTTPException(status_code=503, detail=str(err)) from err
+
+
+def llm_dependency(settings: Settings = Depends(get_settings)) -> LLMProvider:
+    try:
+        return get_llm(settings)
+    except LLMUnavailable as err:
         raise HTTPException(status_code=503, detail=str(err)) from err
 
 
@@ -51,3 +60,23 @@ def list_emails(
         # e.g. Gmail sign-in expired: a setup problem, not a server bug.
         raise HTTPException(status_code=503, detail=str(err)) from err
     return EmailsResponse(provider=provider.name, emails=emails)
+
+
+@app.post("/summarize", response_model=SummarizeResponse)
+def summarize_email(
+    request: SummarizeRequest, llm: LLMProvider = Depends(llm_dependency)
+) -> SummarizeResponse:
+    """Extract every job in one email and judge how useful each is for the profile.
+
+    Errors tell the caller what to do: 429 = retry later, 503 = fix the setup,
+    502 = the model misbehaved for this email (skip it and record the error).
+    """
+    try:
+        return summarize(request.email, request.profile, llm)
+    except LLMRateLimited as err:
+        headers = {"Retry-After": str(err.retry_after_seconds)} if err.retry_after_seconds else None
+        raise HTTPException(status_code=429, detail=str(err), headers=headers) from err
+    except LLMUnavailable as err:
+        raise HTTPException(status_code=503, detail=str(err)) from err
+    except LLMError as err:
+        raise HTTPException(status_code=502, detail=str(err)) from err

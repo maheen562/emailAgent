@@ -1,0 +1,31 @@
+{
+  "experience_level": "student",
+  "years_experience": 0.5,
+  "education": "BS Computer Science, final year",
+  "skills": {
+    "strong": ["Python", "JavaScript", "Git", "REST APIs"],
+    "familiar": ["Node.js", "SQL", "FastAPI", "React"],
+    "learning": ["Docker", "LLM APIs"]
+  },
+  "target_roles": ["Software Engineering Intern", "Junior Backend Developer", "AI/Automation Engineer"],
+  "locations": ["Islamabad", "Rawalpindi"],
+  "remote_preference": "remote_or_hybrid",
+  "min_pay": { "amount": 30000, "currency": "PKR", "period": "month" },
+  "available_hours_per_week": 40,
+  "interests": ["AI agents", "automation", "backend"],
+  "dealbreakers": [
+    "unpaid",
+    "asks for a fee or payment to apply",
+    "requires 3+ years of experience",
+    "onsite outside Islamabad/Rawalpindi"
+  ],
+  "weights": {
+    "experience": 25,
+    "skills": 25,
+    "work_arrangement": 15,
+    "terms_pay": 15,
+    "career_value": 10,
+    "eligibility": 10
+  },
+  "thresholds": { "apply_now": 75, "worth_a_look": 50 }
+}

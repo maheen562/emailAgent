@@ -35,6 +35,19 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Try the agent from the terminal
+
+1. Get a free Gemini API key at https://aistudio.google.com (no credit card) and set `GEMINI_API_KEY` in `agent/.env`.
+2. Optional: copy `profile.example.json` to `profile.json` and fill in your own details. It's git-ignored.
+3. Run:
+```bash
+cd agent
+python -m app.cli            # judge the sample emails (or your Gmail, if EMAIL_PROVIDER=gmail)
+python -m app.cli --limit 1  # just one email
+```
+
+To keep everything on your laptop instead, install [Ollama](https://ollama.com), run `ollama pull qwen2.5:7b`, and set `LLM_PROVIDER=ollama`.
+
 ## Tests
 ```bash
 cd agent && python -m pytest
@@ -44,7 +57,7 @@ cd server && npm test
 ## Project status
 - [x] M1: Scaffolding, health endpoints, tests
 - [x] M2: Email ingestion (demo samples + Gmail API + IMAP backup)
-- [ ] M3: LLM summariser and scorer (Gemini / Ollama)
+- [x] M3: LLM summariser and scorer (Gemini / Ollama)
 - [ ] M4: Platform storage, pipeline and dedupe
 - [ ] M5: Dashboard
 - [ ] M6: Scheduler and hardening

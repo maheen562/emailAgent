@@ -22,3 +22,6 @@ node_modules/
 Thumbs.db
 .vscode/
 .idea/
+
+# Personal profile (copy of profile.example.json with your real details)
+profile.json
