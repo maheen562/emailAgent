@@ -55,3 +55,15 @@ def test_missing_gemini_key_is_503(client):
     res = client.post("/summarize", json=body())  # real dependency; test settings have no key
     assert res.status_code == 503
     assert "GEMINI_API_KEY" in res.json()["detail"]
+
+
+def test_validate_profile_fills_defaults(client):
+    res = client.post("/profile/validate", json={"locations": ["Islamabad"]})
+    assert res.status_code == 200
+    assert res.json()["locations"] == ["Islamabad"]
+    assert res.json()["weights"]["experience"] == 25
+
+
+def test_validate_profile_rejects_bad_values(client):
+    res = client.post("/profile/validate", json={"weights": {"skills": -5}})
+    assert res.status_code == 422

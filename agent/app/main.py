@@ -7,7 +7,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 from app import __version__
 from app.config import Settings, get_settings
 from app.llm import LLMError, LLMProvider, LLMRateLimited, LLMUnavailable, get_llm
-from app.models import EmailsResponse, SummarizeRequest, SummarizeResponse
+from app.models import EmailsResponse, Profile, SummarizeRequest, SummarizeResponse
 from app.providers import EmailProvider, ProviderNotConfigured, get_provider
 from app.summarizer import summarize
 
@@ -60,6 +60,16 @@ def list_emails(
         # e.g. Gmail sign-in expired: a setup problem, not a server bug.
         raise HTTPException(status_code=503, detail=str(err)) from err
     return EmailsResponse(provider=provider.name, emails=emails)
+
+
+@app.post("/profile/validate", response_model=Profile)
+def validate_profile(profile: Profile) -> Profile:
+    """Check a profile and return it with defaults filled in (422 if invalid).
+
+    The Node platform calls this before saving, so a bad profile is rejected
+    when it's edited rather than failing every email in the next run.
+    """
+    return profile
 
 
 @app.post("/summarize", response_model=SummarizeResponse)
