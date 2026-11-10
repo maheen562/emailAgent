@@ -30,10 +30,16 @@ uvicorn app.main:app --reload --port 8000
 ```bash
 cd server
 npm install
+npm run seed   # optional: load 11 already-judged demo jobs, no API key needed
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. The dashboard has four views:
+
+- **Jobs**: every job with its score and verdict. Filter by verdict or status, search, expand "Why this score" to see the six factor ratings and reasons, and mark jobs saved / applied / ignored.
+- **Inbox**: one line per alert email, e.g. *"4 jobs: 1 Apply now (Python Automation Intern at Nimbus Labs), 2 Worth a look, 1 Skip."*
+- **Runs**: history of each fetch-and-judge run. **Run now** starts one.
+- **Profile**: the skills, preferences, weights and dealbreakers every job is judged against.
 
 ## Try the agent from the terminal
 
@@ -59,6 +65,6 @@ cd server && npm test
 - [x] M2: Email ingestion (demo samples + Gmail API + IMAP backup)
 - [x] M3: LLM summariser and scorer (Gemini / Ollama)
 - [x] M4: Platform storage, pipeline and dedupe
-- [ ] M5: Dashboard
+- [x] M5: Dashboard
 - [ ] M6: Scheduler and hardening
 - [ ] M7: Portfolio polish

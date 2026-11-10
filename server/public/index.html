@@ -3,22 +3,110 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
   <title>Job Alert Agent</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script type="module" src="/app.js"></script>
 </head>
 <body>
-  <h1>Job Alert Agent</h1>
-  <p id="status">Checking services…</p>
-  <script>
-    // Placeholder page for M1; the real dashboard comes in M5.
-    fetch('/api/health')
-      .then((r) => r.json())
-      .then((h) => {
-        const a = h.agent;
-        const llm = a.llm_configured ? a.llm_provider : `${a.llm_provider} (no API key yet)`;
-        document.getElementById('status').textContent = a.reachable
-          ? `Platform OK · Agent OK · email: ${a.email_provider} · LLM: ${llm}`
-          : `Platform OK · Agent unreachable: ${a.error}`;
-      });
-  </script>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Job Alert Agent</h1>
+      <span id="health" class="pill" role="status">Checking…</span>
+    </div>
+    <div class="run-controls">
+      <span id="run-status" class="muted" role="status" aria-live="polite"></span>
+      <button id="run-button" class="primary" type="button">Run now</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="kpis" aria-label="Summary">
+      <div class="tile"><span class="tile-label">Apply now</span><span class="tile-value" id="kpi-apply">–</span><span class="tile-note">waiting for a decision</span></div>
+      <div class="tile"><span class="tile-label">Worth a look</span><span class="tile-value" id="kpi-maybe">–</span><span class="tile-note">waiting for a decision</span></div>
+      <div class="tile"><span class="tile-label">Applied</span><span class="tile-value" id="kpi-applied">–</span><span class="tile-note">jobs marked applied</span></div>
+      <div class="tile"><span class="tile-label">Alert emails judged</span><span class="tile-value" id="kpi-emails">–</span><span class="tile-note" id="kpi-emails-note">&nbsp;</span></div>
+    </section>
+
+    <nav class="tabs" aria-label="Views">
+      <a href="#jobs" data-view="jobs">Jobs</a>
+      <a href="#inbox" data-view="inbox">Inbox</a>
+      <a href="#runs" data-view="runs">Runs</a>
+      <a href="#profile" data-view="profile">Profile</a>
+    </nav>
+
+    <!-- Jobs -->
+    <section id="view-jobs" class="view" hidden>
+      <form class="filters" id="job-filters" role="search" onsubmit="return false">
+        <div class="segmented" role="group" aria-label="Verdict">
+          <button type="button" data-verdict="" aria-pressed="true">All</button>
+          <button type="button" data-verdict="apply_now" aria-pressed="false">Apply now</button>
+          <button type="button" data-verdict="worth_a_look" aria-pressed="false">Worth a look</button>
+          <button type="button" data-verdict="skip" aria-pressed="false">Skip</button>
+        </div>
+        <label>Status
+          <select name="status">
+            <option value="">Any</option>
+            <option value="new">New</option>
+            <option value="saved">Saved</option>
+            <option value="applied">Applied</option>
+            <option value="ignored">Ignored</option>
+          </select>
+        </label>
+        <label>Sort
+          <select name="sort">
+            <option value="score">Best match</option>
+            <option value="newest">Most recent</option>
+          </select>
+        </label>
+        <label class="grow">Search
+          <input name="q" type="search" placeholder="Title, company or city" autocomplete="off" />
+        </label>
+      </form>
+      <p id="jobs-count" class="muted"></p>
+      <div id="job-list" class="list"></div>
+    </section>
+
+    <!-- Inbox -->
+    <section id="view-inbox" class="view" hidden>
+      <p class="muted">One line per alert email: is anything in it worth my time?</p>
+      <div id="email-list" class="list"></div>
+    </section>
+
+    <!-- Runs -->
+    <section id="view-runs" class="view" hidden>
+      <div class="table-wrap">
+        <table id="runs-table">
+          <caption class="sr-only">Run history</caption>
+          <thead>
+            <tr>
+              <th scope="col">Run</th><th scope="col">Started</th><th scope="col">Result</th>
+              <th scope="col" class="num">New emails</th><th scope="col" class="num">New jobs</th>
+              <th scope="col" class="num">Duplicates</th><th scope="col" class="num">Tokens</th>
+              <th scope="col">Notes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section id="view-profile" class="view" hidden>
+      <p class="muted">
+        Every job is judged against this profile. The weights decide how much each factor counts,
+        and any dealbreaker turns a job into a Skip. It's checked by the agent before it's saved.
+      </p>
+      <label for="profile-editor" class="sr-only">Profile (JSON)</label>
+      <textarea id="profile-editor" spellcheck="false" rows="28"></textarea>
+      <div class="profile-actions">
+        <button id="profile-save" class="primary" type="button">Save profile</button>
+        <button id="profile-reload" type="button">Discard changes</button>
+        <span id="profile-message" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
