@@ -58,7 +58,7 @@ cd server && npm test
 - [x] M1: Scaffolding, health endpoints, tests
 - [x] M2: Email ingestion (demo samples + Gmail API + IMAP backup)
 - [x] M3: LLM summariser and scorer (Gemini / Ollama)
-- [ ] M4: Platform storage, pipeline and dedupe
+- [x] M4: Platform storage, pipeline and dedupe
 - [ ] M5: Dashboard
 - [ ] M6: Scheduler and hardening
 - [ ] M7: Portfolio polish
