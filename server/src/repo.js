@@ -261,6 +261,33 @@ export function createRepo(db) {
 
     getJob: (id) => jobFromRow(stmt.getJob.get(id)),
 
+    // Headline numbers for the dashboard. Jobs I've applied to or ignored don't
+    // count towards the verdict totals: those show what still needs a decision.
+    stats() {
+      const byVerdict = Object.fromEntries(VERDICTS.map((v) => [v, 0]));
+      for (const row of db
+        .prepare(`SELECT verdict, count(*) AS n FROM jobs WHERE status IN ('new', 'saved') GROUP BY verdict`)
+        .all()) {
+        byVerdict[row.verdict] = row.n;
+      }
+      const byStatus = Object.fromEntries(JOB_STATUSES.map((s) => [s, 0]));
+      for (const row of db.prepare('SELECT status, count(*) AS n FROM jobs GROUP BY status').all()) {
+        byStatus[row.status] = row.n;
+      }
+      const emails = db
+        .prepare(`SELECT count(*) AS total, sum(status = 'failed') AS failed FROM emails`)
+        .get();
+      const lastRun = db.prepare('SELECT * FROM runs ORDER BY id DESC LIMIT 1').get();
+      return {
+        open_by_verdict: byVerdict,
+        by_status: byStatus,
+        jobs_total: Object.values(byStatus).reduce((a, b) => a + b, 0),
+        emails_total: emails.total,
+        emails_failed: emails.failed ?? 0,
+        last_run: lastRun ? { ...lastRun } : null,
+      };
+    },
+
     setJobStatus(id, status) {
       const { changes } = stmt.setJobStatus.run(status, now(), id);
       return changes > 0 ? jobFromRow(stmt.getJob.get(id)) : null;

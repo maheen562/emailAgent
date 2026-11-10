@@ -134,3 +134,17 @@ test('PUT /api/profile rejects invalid profiles without saving', () =>
 
     assert.equal((await call('PUT', '/api/profile', [1, 2])).status, 400);
   }));
+
+test('GET /api/stats counts open jobs by verdict, excluding applied and ignored', () =>
+  withServer({}, async ({ repo, call }) => {
+    seedJobs(repo);
+    const [best] = repo.listJobs().jobs;
+    repo.setJobStatus(best.id, 'applied');
+    const { body } = await call('GET', '/api/stats');
+    assert.deepEqual(body.open_by_verdict, { apply_now: 0, worth_a_look: 0, skip: 1 });
+    assert.equal(body.by_status.applied, 1);
+    assert.equal(body.jobs_total, 2);
+    assert.equal(body.emails_total, 1);
+    assert.equal(body.running, false);
+    assert.equal(body.last_run.trigger, 'manual');
+  }));

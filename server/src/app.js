@@ -7,6 +7,7 @@ import { healthRouter } from './routes/health.js';
 import { jobsRouter } from './routes/jobs.js';
 import { profileRouter } from './routes/profile.js';
 import { runsRouter } from './routes/runs.js';
+import { statsRouter } from './routes/stats.js';
 
 const publicDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public');
 
@@ -21,6 +22,7 @@ export function createApp({ agent, repo, runner, profileStore }) {
     app.use('/api/emails', emailsRouter({ repo }));
     app.use('/api/runs', runsRouter({ repo, runner }));
     app.use('/api/profile', profileRouter({ profileStore, agent }));
+    app.use('/api/stats', statsRouter({ repo, runner }));
   }
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
 

@@ -1,0 +1,656 @@
+{
+  "_comment": "Real Gemini output for the fictional sample emails in agent/samples. Load with: npm run seed",
+  "generated_with": "gemini-3.5-flash",
+  "generated_at": "2026-11-10",
+  "results": [
+    {
+      "email": {
+        "message_id": "<demo-rozee-20261105@example.com>",
+        "source": "rozee",
+        "sender": "jobs@rozee.pk",
+        "subject": "Jobs matching your profile: Software Engineer",
+        "received_at": "2026-11-05T10:05:00+05:00"
+      },
+      "summary": {
+        "job_count": 2,
+        "counts": {
+          "apply_now": 1,
+          "worth_a_look": 0,
+          "skip": 1
+        },
+        "one_line_summary": "2 jobs: 1 Apply now (Associate Software Engineer (Python) at Saffron Analytics), 1 Skip.",
+        "jobs": [
+          {
+            "title": "Associate Software Engineer (Python)",
+            "company": "Saffron Analytics",
+            "location": "Islamabad",
+            "work_mode": "remote",
+            "employment_type": "full_time",
+            "experience_required": "Fresh graduates or final-year students",
+            "salary": "PKR 150,000/month",
+            "hours": null,
+            "summary": "Remote Python associate role building data pipelines and REST APIs with FastAPI.",
+            "apply_url": "https://www.rozee.pk/job/jsid/2000002?utm_source=jobalert&utm_medium=email&utm_campaign=daily",
+            "deadline": "2026-11-30",
+            "factor_scores": {
+              "experience": {
+                "score": 10,
+                "reason": "Explicitly targets fresh graduates or final-year students like candidate."
+              },
+              "skills": {
+                "score": 10,
+                "reason": "Matches Python, SQL, Git, REST APIs, and FastAPI perfectly."
+              },
+              "work_arrangement": {
+                "score": 10,
+                "reason": "Remote work arrangement aligns with preferred remote or hybrid preference."
+              },
+              "terms_pay": {
+                "score": 10,
+                "reason": "Pay of 150,000 PKR per month exceeds 30,000 PKR minimum."
+              },
+              "career_value": {
+                "score": 9,
+                "reason": "Strongly aligns with Junior Backend Developer and AI automation goals."
+              },
+              "eligibility": {
+                "score": 10,
+                "reason": "Candidate meets student eligibility before deadline of November 30, 2026."
+              }
+            },
+            "skills_matched": [
+              "Python",
+              "SQL",
+              "Git",
+              "REST APIs",
+              "FastAPI"
+            ],
+            "skills_missing": [],
+            "dealbreakers_hit": [],
+            "red_flags": [],
+            "why_it_matters": "This is an ideal role offering high pay, remote work, and perfect skill match.",
+            "overall_score": 99,
+            "verdict": "apply_now"
+          },
+          {
+            "title": "MERN Stack Intern",
+            "company": "Pixel Orchard",
+            "location": "Islamabad",
+            "work_mode": "hybrid",
+            "employment_type": "internship",
+            "experience_required": null,
+            "salary": "Unpaid",
+            "hours": "45 hours/week",
+            "summary": "Six-month unpaid hybrid MERN stack internship building web applications in Islamabad.",
+            "apply_url": "https://www.rozee.pk/job/jsid/2000001?utm_source=jobalert&utm_medium=email&utm_campaign=daily",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 8,
+                "reason": "Internship role fits student status with 0.5 years of experience."
+              },
+              "skills": {
+                "score": 6,
+                "reason": "Matches Node.js and React but requires unlisted Express and MongoDB."
+              },
+              "work_arrangement": {
+                "score": 10,
+                "reason": "Hybrid setup in Islamabad matches candidate location and remote preference."
+              },
+              "terms_pay": {
+                "score": 0,
+                "reason": "Position is unpaid, missing the candidate minimum of 30,000 PKR."
+              },
+              "career_value": {
+                "score": 6,
+                "reason": "Provides backend experience but lacks AI or advanced automation focus."
+              },
+              "eligibility": {
+                "score": 8,
+                "reason": "Suitable for student, though requires 45 hours per week."
+              }
+            },
+            "skills_matched": [
+              "React",
+              "Node.js"
+            ],
+            "skills_missing": [
+              "MongoDB",
+              "Express"
+            ],
+            "dealbreakers_hit": [
+              "unpaid"
+            ],
+            "red_flags": [
+              "Unpaid full-time internship"
+            ],
+            "why_it_matters": "This role is unpaid and requires 45 hours weekly, triggering a dealbreaker.",
+            "overall_score": 20,
+            "verdict": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "email": {
+        "message_id": "<demo-indeed-20261106@example.com>",
+        "source": "indeed",
+        "sender": "alert@indeed.com",
+        "subject": "3 new Software Developer jobs near Islamabad",
+        "received_at": "2026-11-06T19:40:00+05:00"
+      },
+      "summary": {
+        "job_count": 3,
+        "counts": {
+          "apply_now": 1,
+          "worth_a_look": 0,
+          "skip": 2
+        },
+        "one_line_summary": "3 jobs: 1 Apply now (Software Engineering Intern at Margalla Soft), 2 Skip.",
+        "jobs": [
+          {
+            "title": "Software Engineering Intern",
+            "company": "Margalla Soft",
+            "location": "Islamabad",
+            "work_mode": "onsite",
+            "employment_type": "internship",
+            "experience_required": "CS students in their final year",
+            "salary": "PKR 40,000 a month",
+            "hours": null,
+            "summary": "Internship opportunity for final-year CS students to build internal tools with senior mentors using Python or JavaScript. Requires bringing your own laptop.",
+            "apply_url": "https://pk.indeed.com/rc/clk/dl?jk=a1b2c3d4e5f60001&from=ja&qd=Xyz123&rd=Abc456&tk=1hfz0001&alid=0002",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 10,
+                "reason": "Cites final year CS student requirement, matching profile's education status."
+              },
+              "skills": {
+                "score": 10,
+                "reason": "Requires Python or JavaScript, matching candidate's strong skills."
+              },
+              "work_arrangement": {
+                "score": 7,
+                "reason": "Onsite in Islamabad matches location preference though hybrid/remote preferred."
+              },
+              "terms_pay": {
+                "score": 9,
+                "reason": "PKR 40,000/month exceeds minimum requirement of PKR 30,000/month."
+              },
+              "career_value": {
+                "score": 9,
+                "reason": "Mentorship by seniors and software intern role align well with target goals."
+              },
+              "eligibility": {
+                "score": 9,
+                "reason": "Final year CS student meets eligibility, requires own laptop."
+              }
+            },
+            "skills_matched": [
+              "Python",
+              "JavaScript"
+            ],
+            "skills_missing": [],
+            "dealbreakers_hit": [],
+            "red_flags": [],
+            "why_it_matters": "This is a great match for a final-year CS student internship in Islamabad with good compensation.",
+            "overall_score": 92,
+            "verdict": "apply_now"
+          },
+          {
+            "title": "Data Entry Executive - Work From Home",
+            "company": "QuickHire Solutions",
+            "location": "Remote",
+            "work_mode": "remote",
+            "employment_type": "unknown",
+            "experience_required": "no experience needed",
+            "salary": "PKR 200,000+ per month",
+            "hours": null,
+            "summary": "Remote data entry position offering high pay with no experience required, but charging a registration fee.",
+            "apply_url": "https://pk.indeed.com/rc/clk/dl?jk=a1b2c3d4e5f60002&from=ja&qd=Xyz124&rd=Abc457&tk=1hfz0002&alid=0002",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 5,
+                "reason": "Requires no experience, but role is unrelated to CS degree."
+              },
+              "skills": {
+                "score": 0,
+                "reason": "No technical skills required, unrelated to software engineering profile."
+              },
+              "work_arrangement": {
+                "score": 10,
+                "reason": "Remote work matches preference."
+              },
+              "terms_pay": {
+                "score": 0,
+                "reason": "Requires PKR 5,000 fee to activate account."
+              },
+              "career_value": {
+                "score": 0,
+                "reason": "Unrelated data entry job offers zero tech career value."
+              },
+              "eligibility": {
+                "score": 0,
+                "reason": "Requires paying PKR 5,000 upfront fee."
+              }
+            },
+            "skills_matched": [],
+            "skills_missing": [],
+            "dealbreakers_hit": [
+              "asks for a fee or payment to apply"
+            ],
+            "red_flags": [
+              "Upfront registration fee of PKR 5,000 required to activate account",
+              "Contact on WhatsApp only",
+              "Unrealistically high pay for entry-level data entry"
+            ],
+            "why_it_matters": "This is a scam posting asking for a fee to apply and should be completely avoided.",
+            "overall_score": 20,
+            "verdict": "skip"
+          },
+          {
+            "title": "DevOps Engineer",
+            "company": "Indus Cloud",
+            "location": "Karachi",
+            "work_mode": "onsite",
+            "employment_type": "full_time",
+            "experience_required": "3+ years",
+            "salary": null,
+            "hours": null,
+            "summary": "Full-time onsite DevOps position in Karachi requiring 3+ years experience with cloud tools and on-call rotation.",
+            "apply_url": "https://pk.indeed.com/rc/clk/dl?jk=a1b2c3d4e5f60003&from=ja&qd=Xyz125&rd=Abc458&tk=1hfz0003&alid=0002",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 0,
+                "reason": "Requires 3+ years experience versus candidate's 0.5 years."
+              },
+              "skills": {
+                "score": 1,
+                "reason": "Requires AWS, Terraform, CI/CD which candidate lacks."
+              },
+              "work_arrangement": {
+                "score": 0,
+                "reason": "Onsite in Karachi violates location preference and dealbreaker."
+              },
+              "terms_pay": {
+                "score": 5,
+                "reason": "Salary details not provided in posting."
+              },
+              "career_value": {
+                "score": 4,
+                "reason": "Some backend relevance but role is too senior."
+              },
+              "eligibility": {
+                "score": 0,
+                "reason": "Requires 3+ years experience candidate does not have."
+              }
+            },
+            "skills_matched": [],
+            "skills_missing": [
+              "AWS",
+              "Terraform",
+              "CI/CD"
+            ],
+            "dealbreakers_hit": [
+              "requires 3+ years of experience",
+              "onsite outside Islamabad/Rawalpindi"
+            ],
+            "red_flags": [],
+            "why_it_matters": "This job triggers multiple dealbreakers due to experience requirements and being onsite outside Islamabad/Rawalpindi.",
+            "overall_score": 14,
+            "verdict": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "email": {
+        "message_id": "<demo-linkedin-20261107@example.com>",
+        "source": "linkedin",
+        "sender": "jobalerts-noreply@linkedin.com",
+        "subject": "4 new jobs for \"software engineer intern\" in Islamabad",
+        "received_at": "2026-11-07T08:15:00+05:00"
+      },
+      "summary": {
+        "job_count": 4,
+        "counts": {
+          "apply_now": 2,
+          "worth_a_look": 1,
+          "skip": 1
+        },
+        "one_line_summary": "4 jobs: 2 Apply now (Python Automation Intern at Nimbus Labs, Junior Full Stack Developer at Tarbela Tech), 1 Worth a look, 1 Skip.",
+        "jobs": [
+          {
+            "title": "Python Automation Intern",
+            "company": "Nimbus Labs",
+            "location": "Islamabad, Pakistan",
+            "work_mode": "remote",
+            "employment_type": "internship",
+            "experience_required": "0-1 years experience",
+            "salary": "PKR 60,000/month",
+            "hours": "40 hours/week",
+            "summary": "Build Python scripts and API integrations that automate client workflows. It is a 3-month paid internship with a possible full-time offer.",
+            "apply_url": "https://www.linkedin.com/comm/jobs/view/4100000001/?trackingId=Ab12Cd34Ef56Gh78&refId=xyz&midToken=AQE1234567890&trk=eml-email_job_alert_digest_01",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 10,
+                "reason": "Requires 0-1 years experience, matching candidate's 0.5 years."
+              },
+              "skills": {
+                "score": 10,
+                "reason": "Requires Python, REST APIs, Git, matching candidate's strong skills."
+              },
+              "work_arrangement": {
+                "score": 10,
+                "reason": "Remote work mode matches candidate's preferred work arrangement."
+              },
+              "terms_pay": {
+                "score": 10,
+                "reason": "Pay of PKR 60,000/month exceeds candidate's PKR 30,000 minimum."
+              },
+              "career_value": {
+                "score": 10,
+                "reason": "Automation focus fits interests and offers a path to full-time."
+              },
+              "eligibility": {
+                "score": 10,
+                "reason": "Students and fresh graduates are explicitly welcomed."
+              }
+            },
+            "skills_matched": [
+              "Python",
+              "REST APIs",
+              "Git"
+            ],
+            "skills_missing": [],
+            "dealbreakers_hit": [],
+            "red_flags": [],
+            "why_it_matters": "Perfect match for skills, interests, salary, and remote preference with full-time potential.",
+            "overall_score": 100,
+            "verdict": "apply_now"
+          },
+          {
+            "title": "Junior Full Stack Developer",
+            "company": "Tarbela Tech",
+            "location": "Rawalpindi, Pakistan",
+            "work_mode": "onsite",
+            "employment_type": "full_time",
+            "experience_required": "1+ year experience preferred, strong fresh graduates considered",
+            "salary": "PKR 80,000 - 120,000/month",
+            "hours": "Monday to Saturday, 9am-6pm",
+            "summary": "Develop full stack applications using React, Node.js, and PostgreSQL on-site in Rawalpindi.",
+            "apply_url": "https://www.linkedin.com/comm/jobs/view/4100000003/?trackingId=Qq11Ww22Ee33Rr44&refId=def&trk=eml-email_job_alert_digest_03",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 8,
+                "reason": "Fresh graduates considered, matching candidate's final-year student status."
+              },
+              "skills": {
+                "score": 8,
+                "reason": "Matches React, Node.js, and SQL skills."
+              },
+              "work_arrangement": {
+                "score": 6,
+                "reason": "On-site in Rawalpindi, but involves a 6-day workweek."
+              },
+              "terms_pay": {
+                "score": 7,
+                "reason": "Salary exceeds minimum but requires 54 hours per week."
+              },
+              "career_value": {
+                "score": 7,
+                "reason": "Provides practical full-time backend and full stack experience."
+              },
+              "eligibility": {
+                "score": 9,
+                "reason": "Considers strong fresh graduates."
+              }
+            },
+            "skills_matched": [
+              "React",
+              "Node.js",
+              "SQL"
+            ],
+            "skills_missing": [
+              "PostgreSQL"
+            ],
+            "dealbreakers_hit": [],
+            "red_flags": [],
+            "why_it_matters": "Good salary and local location, but demands a heavy 54-hour 6-day workweek.",
+            "overall_score": 76,
+            "verdict": "apply_now"
+          },
+          {
+            "title": "AI Engineer Intern",
+            "company": "Koh Digital",
+            "location": null,
+            "work_mode": "remote",
+            "employment_type": "internship",
+            "experience_required": null,
+            "salary": null,
+            "hours": "6pm-3am PKT",
+            "summary": "Work with LLM APIs and prompt engineering on a US-based product team during night shift hours.",
+            "apply_url": "https://www.linkedin.com/comm/jobs/view/4100000004/?trackingId=Mm55Nn66Bb77Vv88&refId=ghi&trk=eml-email_job_alert_digest_04",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 7,
+                "reason": "Internship level aligns with candidate's student status."
+              },
+              "skills": {
+                "score": 9,
+                "reason": "Requires Python and LLM APIs, perfectly matching target skills."
+              },
+              "work_arrangement": {
+                "score": 4,
+                "reason": "Remote, but requires night shift hours from 6pm to 3am PKT."
+              },
+              "terms_pay": {
+                "score": 3,
+                "reason": "Stipend is undisclosed, making pay compliance uncertain."
+              },
+              "career_value": {
+                "score": 9,
+                "reason": "High career value in AI engineering and LLM APIs."
+              },
+              "eligibility": {
+                "score": 8,
+                "reason": "Requires working US Eastern overlap hours."
+              }
+            },
+            "skills_matched": [
+              "Python",
+              "LLM APIs"
+            ],
+            "skills_missing": [
+              "LangChain"
+            ],
+            "dealbreakers_hit": [],
+            "red_flags": [
+              "vague description of stipend"
+            ],
+            "why_it_matters": "Strong match for AI career goals, but has undisclosed pay and night shift hours.",
+            "overall_score": 68,
+            "verdict": "worth_a_look"
+          },
+          {
+            "title": "Senior Backend Engineer (Node.js)",
+            "company": "Crestline Systems",
+            "location": "Lahore, Pakistan",
+            "work_mode": "hybrid",
+            "employment_type": "full_time",
+            "experience_required": "5+ years of professional backend experience required",
+            "salary": null,
+            "hours": null,
+            "summary": "Lead the design of distributed Node.js microservices and mentor a team of four.",
+            "apply_url": "https://www.linkedin.com/comm/jobs/view/4100000002/?trackingId=Zx98Yw76Vu54Ts32&refId=abc&trk=eml-email_job_alert_digest_02",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 0,
+                "reason": "Requires 5+ years experience vs candidate's 0.5 years."
+              },
+              "skills": {
+                "score": 5,
+                "reason": "Matches Node.js but requires senior tech like Kubernetes and Kafka."
+              },
+              "work_arrangement": {
+                "score": 2,
+                "reason": "Hybrid role located in Lahore outside candidate's target cities."
+              },
+              "terms_pay": {
+                "score": 5,
+                "reason": "Salary details are not specified in the job posting."
+              },
+              "career_value": {
+                "score": 4,
+                "reason": "Senior leadership role is too advanced for entry-level candidate."
+              },
+              "eligibility": {
+                "score": 2,
+                "reason": "Does not meet 5+ years experience requirement."
+              }
+            },
+            "skills_matched": [
+              "Node.js"
+            ],
+            "skills_missing": [
+              "Kubernetes",
+              "Kafka"
+            ],
+            "dealbreakers_hit": [
+              "requires 3+ years of experience"
+            ],
+            "red_flags": [],
+            "why_it_matters": "Not worth pursuing due to senior experience dealbreaker and Lahore location.",
+            "overall_score": 20,
+            "verdict": "skip"
+          }
+        ]
+      }
+    },
+    {
+      "email": {
+        "message_id": "<demo-digest-20261108@example.com>",
+        "source": "other",
+        "sender": "digest@techtalent.example.com",
+        "subject": "This week's picks: 2 entry-level engineering roles",
+        "received_at": "2026-11-08T09:00:00+05:00"
+      },
+      "summary": {
+        "job_count": 2,
+        "counts": {
+          "apply_now": 1,
+          "worth_a_look": 1,
+          "skip": 0
+        },
+        "one_line_summary": "2 jobs: 1 Apply now (Backend Developer Intern (Node.js / Python) at BrightPath AI), 1 Worth a look.",
+        "jobs": [
+          {
+            "title": "Backend Developer Intern (Node.js / Python)",
+            "company": "BrightPath AI",
+            "location": "Remote (Pakistan)",
+            "work_mode": "remote",
+            "employment_type": "internship",
+            "experience_required": "Degree in progress is fine",
+            "salary": "USD 300/month",
+            "hours": "40 hours/week",
+            "summary": "Build AI agents automating HR and support workflows for US clients. It is a 90-day internship with a path to a full-time role.",
+            "apply_url": "https://jobs.example.com/brightpath/backend-intern",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 10,
+                "reason": "Degree in progress allowed, perfect for final-year student with 0.5 years experience."
+              },
+              "skills": {
+                "score": 10,
+                "reason": "Requires Python, Node.js, REST APIs, Git which candidate has."
+              },
+              "work_arrangement": {
+                "score": 10,
+                "reason": "Remote work matches candidate's preference for remote or hybrid."
+              },
+              "terms_pay": {
+                "score": 10,
+                "reason": "USD 300/month exceeds the candidate's minimum pay requirement of PKR 30k."
+              },
+              "career_value": {
+                "score": 10,
+                "reason": "Involves AI agents and backend work with a path to full-time."
+              },
+              "eligibility": {
+                "score": 10,
+                "reason": "Candidate meets requirements for degree in progress and English skills."
+              }
+            },
+            "skills_matched": [
+              "Python",
+              "Node.js",
+              "REST APIs",
+              "Git"
+            ],
+            "skills_missing": [],
+            "dealbreakers_hit": [],
+            "red_flags": [],
+            "why_it_matters": "Excellent fit aligning with AI/backend interests, skill set, pay, and remote preference.",
+            "overall_score": 100,
+            "verdict": "apply_now"
+          },
+          {
+            "title": "Graduate Trainee Engineer",
+            "company": "Northwind Pak",
+            "location": "Islamabad",
+            "work_mode": "onsite",
+            "employment_type": "full_time",
+            "experience_required": "Completed BS degree (2025 or 2026 batch)",
+            "salary": "PKR 70,000/month",
+            "hours": null,
+            "summary": "A 6-month rotational programme across QA, support, and development. Includes a 2-year bond following completion.",
+            "apply_url": "https://jobs.example.com/northwind/graduate-trainee",
+            "deadline": null,
+            "factor_scores": {
+              "experience": {
+                "score": 6,
+                "reason": "Requires completed degree; candidate is currently in final year."
+              },
+              "skills": {
+                "score": 5,
+                "reason": "No technical skills specified in the job email."
+              },
+              "work_arrangement": {
+                "score": 7,
+                "reason": "Onsite in Islamabad matches location, though remote/hybrid is preferred."
+              },
+              "terms_pay": {
+                "score": 4,
+                "reason": "Pay is PKR 70,000/month but requires a 2-year bond."
+              },
+              "career_value": {
+                "score": 5,
+                "reason": "Includes QA and support rotations rather than dedicated backend development."
+              },
+              "eligibility": {
+                "score": 6,
+                "reason": "Requires completed BS degree and CGPA 3.0+; candidate is still enrolled."
+              }
+            },
+            "skills_matched": [],
+            "skills_missing": [],
+            "dealbreakers_hit": [],
+            "red_flags": [
+              "2-year bond after the programme"
+            ],
+            "why_it_matters": "Offers decent pay in Islamabad but involves non-backend rotations and a 2-year bond.",
+            "overall_score": 55,
+            "verdict": "worth_a_look"
+          }
+        ]
+      }
+    }
+  ]
+}
