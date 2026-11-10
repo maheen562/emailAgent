@@ -117,6 +117,13 @@ class ExtractedJob(BaseModel):
     title: str
     company: str | None
     location: str | None
+    country: str | None = Field(
+        description=(
+            "Full English country name where the job is based (e.g. Pakistan, Australia). "
+            "For remote jobs, the country you must live in, or 'Worldwide' if any country is "
+            "accepted. Null if it can't be told from the email."
+        )
+    )
     work_mode: WorkMode
     employment_type: EmploymentType
     experience_required: str | None

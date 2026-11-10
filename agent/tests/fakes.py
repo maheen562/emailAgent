@@ -22,6 +22,7 @@ def make_job(scores: int | dict | None = 8, **overrides) -> dict:
         "title": "Python Intern",
         "company": "Nimbus Labs",
         "location": "Islamabad",
+        "country": "Pakistan",
         "work_mode": "remote",
         "employment_type": "internship",
         "experience_required": "0-1 years",

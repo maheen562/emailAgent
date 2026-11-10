@@ -21,7 +21,9 @@ jobs", ads, and newsletter text that is not a job.
 
 Only use facts stated in the email. If something isn't stated, use null or \
 "unknown"; never guess salaries, locations or requirements. For apply_ref, \
-give the [Ln] ref attached to that job's title or apply link (e.g. "L3"), or null.
+give the [Ln] ref attached to that job's title or apply link (e.g. "L3"), or null. \
+For country, a well-known city or state counts as stated (e.g. "Melbourne, VIC" is \
+Australia, "Lahore" is Pakistan).
 
 Rate each job on six factors from 0 to 10, where 10 is a perfect fit for this \
 candidate and 0 is a complete mismatch. Use 5 when the email gives too little \

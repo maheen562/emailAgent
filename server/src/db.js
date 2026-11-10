@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 
+import { guessCountry } from './country.js';
+
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS runs (
   id              INTEGER PRIMARY KEY,
@@ -45,6 +47,7 @@ CREATE TABLE IF NOT EXISTS jobs (
   title               TEXT NOT NULL,
   company             TEXT,
   location            TEXT,
+  country             TEXT,                       -- e.g. Pakistan, Australia, Worldwide
   work_mode           TEXT NOT NULL,
   employment_type     TEXT NOT NULL,
   experience_required TEXT,
@@ -86,7 +89,23 @@ export function openDb(file) {
   db.exec('PRAGMA foreign_keys = ON;');
   if (file !== ':memory:') db.exec('PRAGMA journal_mode = WAL;'); // reads don't block the run's writes
   db.exec(SCHEMA);
+  migrate(db);
   return db;
+}
+
+// Brings databases created by older versions up to date. Each step checks
+// whether it's needed, so it's safe to run on every start.
+function migrate(db) {
+  const jobColumns = db.prepare('PRAGMA table_info(jobs)').all().map((c) => c.name);
+  if (!jobColumns.includes('country')) {
+    db.exec('ALTER TABLE jobs ADD COLUMN country TEXT');
+    // Fill in jobs stored before the column existed, from their location text.
+    const update = db.prepare('UPDATE jobs SET country = ? WHERE id = ?');
+    for (const { id, location } of db.prepare('SELECT id, location FROM jobs').all()) {
+      update.run(guessCountry(location), id);
+    }
+  }
+  db.exec('CREATE INDEX IF NOT EXISTS jobs_country ON jobs (country)');
 }
 
 // Runs fn inside a transaction: all of its writes are saved, or none are.

@@ -1,4 +1,5 @@
 // Every SQL query lives here, so routes and the pipeline never build SQL themselves.
+import { resolveCountry } from './country.js';
 import { dedupeKey } from './dedupe.js';
 import { transaction } from './db.js';
 
@@ -15,6 +16,7 @@ function jobFromRow(row) {
     title: row.title,
     company: row.company,
     location: row.location,
+    country: row.country,
     work_mode: row.work_mode,
     employment_type: row.employment_type,
     experience_required: row.experience_required,
@@ -77,11 +79,11 @@ export function createRepo(db) {
     listEmails: db.prepare('SELECT * FROM emails ORDER BY received_at DESC LIMIT ? OFFSET ?'),
     countEmails: db.prepare('SELECT count(*) AS n FROM emails'),
     insertJob: db.prepare(`
-      INSERT INTO jobs (dedupe_key, first_message_id, title, company, location, work_mode,
+      INSERT INTO jobs (dedupe_key, first_message_id, title, company, location, country, work_mode,
         employment_type, experience_required, salary, hours, summary, apply_url, deadline,
         overall_score, verdict, why_it_matters, factor_scores_json, skills_matched_json,
         skills_missing_json, dealbreakers_json, red_flags_json, created_at, last_seen_at, updated_at)
-      VALUES (:dedupe_key, :first_message_id, :title, :company, :location, :work_mode,
+      VALUES (:dedupe_key, :first_message_id, :title, :company, :location, :country, :work_mode,
         :employment_type, :experience_required, :salary, :hours, :summary, :apply_url, :deadline,
         :overall_score, :verdict, :why_it_matters, :factor_scores_json, :skills_matched_json,
         :skills_missing_json, :dealbreakers_json, :red_flags_json, :now, :now, :now)
@@ -192,6 +194,7 @@ export function createRepo(db) {
             title: job.title,
             company: job.company ?? null,
             location: job.location ?? null,
+            country: resolveCountry(job),
             work_mode: job.work_mode,
             employment_type: job.employment_type,
             experience_required: job.experience_required ?? null,
@@ -222,7 +225,8 @@ export function createRepo(db) {
     },
 
     // --- jobs ------------------------------------------------------------
-    listJobs({ verdict, status, minScore, q, sort = 'score', limit = 50, offset = 0 } = {}) {
+    // country: only jobs in that country; withWorldwide: also remote jobs open to any country.
+    listJobs({ verdict, status, minScore, q, country, withWorldwide = false, sort = 'score', limit = 50, offset = 0 } = {}) {
       const where = [];
       const params = [];
       if (verdict) {
@@ -232,6 +236,10 @@ export function createRepo(db) {
       if (status) {
         where.push('jobs.status = ?');
         params.push(status);
+      }
+      if (country) {
+        where.push(withWorldwide ? "(jobs.country = ? COLLATE NOCASE OR jobs.country = 'Worldwide')" : 'jobs.country = ? COLLATE NOCASE');
+        params.push(country);
       }
       if (minScore !== undefined) {
         where.push('jobs.overall_score >= ?');

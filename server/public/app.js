@@ -195,7 +195,30 @@ async function startRun() {
 // Jobs view
 // ---------------------------------------------------------------------------
 
-const jobFilters = { verdict: '', status: '', sort: 'score', q: '' };
+const jobFilters = { verdict: '', status: '', sort: 'score', q: '', location: '' };
+const LOCATION_FILTERS = {
+  pk: { country: 'Pakistan' },
+  'pk+ww': { country: 'Pakistan', worldwide: '1' },
+};
+
+// The location choice is remembered in this browser. Storage can be blocked
+// (private windows, strict settings), so failures are ignored.
+const LOCATION_KEY = 'jobAgent.location';
+function loadLocationChoice() {
+  try {
+    const saved = localStorage.getItem(LOCATION_KEY);
+    return saved in LOCATION_FILTERS ? saved : '';
+  } catch {
+    return '';
+  }
+}
+function saveLocationChoice(value) {
+  try {
+    localStorage.setItem(LOCATION_KEY, value);
+  } catch {
+    // not remembered; still works for this visit
+  }
+}
 
 function factorMeter(key, label, factor) {
   const score = factor?.score ?? 0;
@@ -268,7 +291,13 @@ function jobCard(job) {
   const workMode = WORK_MODE[job.work_mode];
   // Skip "Remote" if the location already says "Remote (Pakistan)".
   const showMode = workMode && !(job.location ?? '').toLowerCase().includes(workMode.toLowerCase());
-  const meta = [job.company, job.location, showMode && workMode, EMPLOYMENT[job.employment_type], job.salary].filter(Boolean);
+  const country =
+    job.country === 'Worldwide'
+      ? 'Open worldwide'
+      : job.country && !(job.location ?? '').toLowerCase().includes(job.country.toLowerCase())
+        ? job.country
+        : null;
+  const meta = [job.company, job.location, country, showMode && workMode, EMPLOYMENT[job.employment_type], job.salary].filter(Boolean);
 
   return h(
     'article',
@@ -330,6 +359,7 @@ async function setJobStatus(job, status) {
 async function loadJobs() {
   const params = new URLSearchParams({ limit: '100', sort: jobFilters.sort });
   for (const key of ['verdict', 'status', 'q']) if (jobFilters[key]) params.set(key, jobFilters[key]);
+  for (const [key, value] of Object.entries(LOCATION_FILTERS[jobFilters.location] ?? {})) params.set(key, value);
   const list = $('#job-list');
   try {
     const { jobs, total } = await api(`/api/jobs?${params}`);
@@ -353,6 +383,13 @@ function setupJobFilters() {
       loadJobs();
     });
   }
+  jobFilters.location = loadLocationChoice();
+  form.location.value = jobFilters.location;
+  form.location.addEventListener('change', () => {
+    jobFilters.location = form.location.value;
+    saveLocationChoice(jobFilters.location);
+    loadJobs();
+  });
   form.status.addEventListener('change', () => ((jobFilters.status = form.status.value), loadJobs()));
   form.sort.addEventListener('change', () => ((jobFilters.sort = form.sort.value), loadJobs()));
   form.q.addEventListener('input', debounce(() => ((jobFilters.q = form.q.value.trim()), loadJobs()), 250));

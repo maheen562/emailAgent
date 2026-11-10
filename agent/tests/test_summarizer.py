@@ -93,3 +93,10 @@ def test_schema_is_flat_json_schema():
     # Python decides these; the model must not be asked for them.
     for field in ("overall_score", "verdict", "apply_url"):
         assert field not in job_schema["properties"]
+
+
+def test_country_is_extracted_and_passed_through():
+    job_schema = SCHEMA["properties"]["jobs"]["items"]
+    assert "country" in job_schema["required"]
+    llm = FakeLLM(extraction_json(make_job(country="Australia", location="Melbourne, VIC")))
+    assert summarize(make_email(), Profile(), llm).jobs[0].country == "Australia"
