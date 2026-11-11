@@ -31,6 +31,7 @@ It's built as two services: a **Node.js core platform** (REST API, SQLite storag
 - [Known limitations](#known-limitations)
 - [Roadmap](#roadmap)
 - [How I built it](#how-i-built-it)
+- [License](#license)
 
 ---
 
@@ -379,3 +380,7 @@ I built this with **Claude Code** as an AI pair programmer.
   I approved each milestone before the next one started, and ran the agent against my own inbox.
 - **What testing on real data found:** a schema bug that Gemini rejected, overloaded and retired models, and confusing setup steps. Each was fixed with a regression test, and the troubleshooting table above comes from those problems.
 - **Process:** the work was done in milestones (see [PLAN.md](PLAN.md)), with small commits following [Chris Beams' commit message guidelines](https://cbea.ms/git-commit/).
+
+## License
+
+[MIT](LICENSE) © 2026 Maheen Khan
