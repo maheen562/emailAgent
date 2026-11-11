@@ -1,5 +1,8 @@
 # Job Alert Agent
 
+[![Tests](https://github.com/maheen562/emailAgent/actions/workflows/ci.yml/badge.svg)](https://github.com/maheen562/emailAgent/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 An AI agent that reads my job-alert emails (LinkedIn, Indeed, Glassdoor, Rozee.pk), pulls out every job in them, and tells me **how useful each job is to me**, with the reasons. Each job gets a verdict: **Apply now**, **Worth a look** or **Skip**.
 
 It's built as two services: a **Node.js core platform** (REST API, SQLite storage, dashboard) and a **Python automation layer** (Gmail integration, email parsing, LLM judging). It runs entirely on free tiers.
@@ -303,6 +306,8 @@ cd agent && python -m pytest     # 101 tests
 cd server && npm test            # 55 tests
 ```
 
+GitHub Actions runs both suites on every push and pull request, on Python 3.11 and 3.13 and Node 22 and 24 (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+
 The tests never call a real LLM or Gmail. Both are replaced with fakes, so the suites are free, fast and repeatable. They cover:
 
 - email parsing,
@@ -362,7 +367,7 @@ The tests never call a real LLM or Gmail. Both are replaced with fakes, so the s
 - [x] Storage, run pipeline and duplicate detection
 - [x] Dashboard, demo seed data and the country filter
 - [ ] Scheduled runs, and showing the active Gmail query and profile source in the dashboard
-- [ ] GitHub Actions running both test suites
+- [x] GitHub Actions running both test suites
 - [ ] Gmail push notifications instead of polling
 - [ ] Daily digest email, and a drafted cover-letter starter for strong matches
 
