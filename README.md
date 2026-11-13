@@ -55,26 +55,26 @@ Job boards send a lot of alert emails, and most of the jobs in them don't fit: w
 
 ## How it works
 
-```mermaid
-flowchart LR
-    B["Browser<br/>dashboard"] -->|REST| N["Node.js platform<br/>Express + SQLite"]
-    N -->|"GET /emails<br/>POST /summarize"| P["Python agent<br/>FastAPI"]
-    P -->|"read-only OAuth"| G[("Gmail API")]
-    P -->|"JSON schema"| L["Gemini API<br/>or Ollama"]
-```
+![Architecture: the browser dashboard talks to the Node.js platform, whose run pipeline calls the Python agent; the agent reads Gmail with read-only OAuth, asks Gemini to rate each job, and scores the result in Python; the platform stores everything in SQLite](docs/architecture.svg)
+
+Everything except Gmail and Gemini runs on your computer. The Python agent keeps no state; the Node platform owns the database. With `LLM_PROVIDER=ollama`, a local model replaces Gemini and only the Gmail fetch leaves the machine.
 
 | Layer | Folder | Responsibility |
 |---|---|---|
 | **Core platform** | `server/` | Runs each fetch-and-judge run, stores results in SQLite, removes duplicates, serves the REST API and the dashboard |
 | **Automation layer** | `agent/` | Talks to the outside world: fetches emails from Gmail, cleans them up, calls the LLM, scores the result. It stores nothing. |
 
-**What happens when you click "Run now":**
+**What happens when you click "Run now"** (the numbers match the diagram):
 
-1. The platform asks the agent for alert emails from the last 7 days.
-2. It skips any email it has already judged, so nothing is sent to the LLM twice.
-3. For each new email, the agent strips the HTML, calls the LLM with a JSON schema, validates the answer and works out the scores.
-4. The platform saves the email and its jobs in one transaction, and stores a job that appeared in an earlier alert only once.
-5. The dashboard shows the results. The run's progress is saved after every email, so it's visible while it runs.
+1. **Run now.** The dashboard sends `POST /api/runs`. The platform answers `202` straight away and runs in the background, never two runs at once.
+2. **Start the run.** The pipeline records a new run and saves its progress after every email, so it's visible while it runs.
+3. **Fetch.** The pipeline asks the agent for the last 7 days of alert emails (`GET /emails`).
+4. **Read Gmail.** The agent runs the Gmail search with read-only access. One parser strips the HTML and swaps tracking links for short `[L1]` refs.
+5. **Judge new emails only.** The pipeline skips emails it has already judged, so nothing is sent to the LLM twice, and sends each new one with your profile to `POST /summarize`.
+6. **Ask the LLM.** Gemini returns JSON that must match a schema: every job in the email, its facts, and six ratings from 0 to 10 with reasons.
+7. **Score in Python.** Code works out the weighted score, applies dealbreakers, picks the verdict and maps `[L3]` back to the real apply link.
+8. **Save.** The email and its jobs are written in one transaction. A job already seen in another alert is stored once and counted.
+9. **Show.** The dashboard reads jobs, emails and runs back through the REST API.
 
 ## How a job is judged
 
@@ -295,7 +295,7 @@ emailAgent/
 │   ├── scripts/seed.js
 │   └── test/
 ├── profile.example.json        Example profile (copy to profile.json)
-├── docs/screenshots/
+├── docs/                       Architecture diagram and screenshots
 └── PLAN.md                     Original design plan and milestones
 ```
 

@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" role="img" aria-labelledby="arch-title arch-desc">
+  <title id="arch-title">Job Alert Agent architecture</title>
+  <desc id="arch-desc">The browser dashboard calls the Node.js platform's REST API. The platform's run pipeline calls the Python agent over HTTP to fetch emails and judge them. The agent fetches email from the Gmail API with read-only OAuth, sends each email to the Gemini API, and scores the result in Python. The platform saves results to SQLite. Numbers 1 to 9 show the order of a run.</desc>
+  <style>
+    svg { --bg:#ffffff; --surface:#ffffff; --ink:#14171c; --ink2:#3b414b; --muted:#5d6470; --line:#c9ced6;
+          --node:#1d7f67; --node-tint:#e7f3ef; --py:#3f53ad; --py-tint:#eceffa; --ext:#737a85; --ext-tint:#eff0f3;
+          --accent:#b8541b; --accent-tint:#fbede4; }
+    @media (prefers-color-scheme: dark) {
+      svg { --bg:#0d1117; --surface:#161b22; --ink:#e8ebef; --ink2:#c3c9d1; --muted:#9aa2ad; --line:#30363d;
+            --node:#4fc3a1; --node-tint:#12251f; --py:#8d9cf0; --py-tint:#171c32; --ext:#9ba2ac; --ext-tint:#1b1f26;
+            --accent:#f0894a; --accent-tint:#2b1c13; }
+    }
+    .bg { fill: var(--bg); }
+    .zone-machine { fill: none; stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .zone-node { fill: var(--node-tint); stroke: var(--node); stroke-width: 1.5; }
+    .zone-py { fill: var(--py-tint); stroke: var(--py); stroke-width: 1.5; }
+    .zone-cloud { fill: var(--ext-tint); stroke: var(--ext); stroke-width: 1.5; stroke-dasharray: 5 4; }
+    .box { fill: var(--surface); stroke-width: 1.5; }
+    .b-node { stroke: var(--node); }
+    .b-py { stroke: var(--py); }
+    .b-ext { stroke: var(--ext); }
+    .b-web { stroke: var(--ink2); }
+    .b-accent { stroke: var(--accent); fill: var(--accent-tint); stroke-width: 2; }
+    .edge { fill: none; stroke: var(--ink2); stroke-width: 1.6; }
+    .arrowhead { fill: var(--ink2); }
+    text { font-family: 'IBM Plex Sans', 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .t-title { font-size: 13px; font-weight: 600; fill: var(--ink); }
+    .t-sub { font-size: 11px; fill: var(--muted); }
+    .t-mono, .t-zone, .t-edge { font-family: 'IBM Plex Mono', Consolas, Menlo, monospace; }
+    .t-mono { font-size: 10.5px; fill: var(--muted); }
+    .t-head { font-size: 14px; font-weight: 700; fill: var(--ink); }
+    .t-zone { font-size: 11px; fill: var(--muted); letter-spacing: 0.04em; }
+    .t-edge { font-size: 10.5px; font-weight: 500; fill: var(--ink2); }
+    .t-legend { font-size: 12px; fill: var(--ink2); }
+    .step circle { fill: var(--ink); }
+    .step text { font-size: 10.5px; font-weight: 600; fill: var(--bg); }
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" class="arrowhead"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1100" height="600" class="bg"/>
+
+  <!-- Boundaries -->
+  <rect x="10" y="30" width="952" height="506" rx="14" class="zone-machine"/>
+  <text x="26" y="50" class="t-zone">YOUR COMPUTER</text>
+  <rect x="974" y="190" width="116" height="232" rx="12" class="zone-cloud"/>
+  <text x="1032" y="209" text-anchor="middle" class="t-zone">GOOGLE</text>
+
+  <!-- Browser -->
+  <rect x="24" y="115" width="140" height="58" rx="8" class="box b-web"/>
+  <text x="94" y="140" text-anchor="middle" class="t-title">Browser</text>
+  <text x="94" y="158" text-anchor="middle" class="t-sub">dashboard</text>
+
+  <!-- Node platform -->
+  <rect x="200" y="64" width="260" height="456" rx="12" class="zone-node"/>
+  <text x="216" y="88" class="t-head">Node.js platform</text>
+  <text x="216" y="105" class="t-mono">server/ · port 3000</text>
+
+  <rect x="228" y="116" width="214" height="56" rx="8" class="box b-node"/>
+  <text x="335" y="140" text-anchor="middle" class="t-title">REST API (Express)</text>
+  <text x="335" y="158" text-anchor="middle" class="t-sub">jobs · emails · runs · profile</text>
+
+  <rect x="228" y="212" width="214" height="62" rx="8" class="box b-node"/>
+  <text x="335" y="238" text-anchor="middle" class="t-title">Run pipeline</text>
+  <text x="335" y="256" text-anchor="middle" class="t-sub">fetch · skip seen · judge · save</text>
+
+  <rect x="228" y="340" width="214" height="62" rx="8" class="box b-node"/>
+  <text x="335" y="366" text-anchor="middle" class="t-title">Repository + dedupe</text>
+  <text x="335" y="384" text-anchor="middle" class="t-sub">all SQL · same job stored once</text>
+
+  <ellipse cx="335" cy="446" rx="80" ry="10" class="box b-node"/>
+  <path d="M255 446 V490 A80 10 0 0 0 415 490 V446" class="box b-node"/>
+  <text x="335" y="475" text-anchor="middle" class="t-title">SQLite</text>
+  <text x="335" y="492" text-anchor="middle" class="t-mono">data/jobs.db</text>
+
+  <!-- Python agent -->
+  <rect x="560" y="64" width="380" height="456" rx="12" class="zone-py"/>
+  <text x="576" y="88" class="t-head">Python agent</text>
+  <text x="576" y="105" class="t-mono">agent/ · port 8000 · stores nothing</text>
+
+  <rect x="578" y="116" width="344" height="56" rx="8" class="box b-py"/>
+  <text x="750" y="140" text-anchor="middle" class="t-title">API routes (FastAPI)</text>
+  <text x="750" y="158" text-anchor="middle" class="t-mono">GET /emails · POST /summarize</text>
+
+  <rect x="740" y="212" width="182" height="72" rx="8" class="box b-py"/>
+  <text x="831" y="236" text-anchor="middle" class="t-title">Email providers</text>
+  <text x="831" y="254" text-anchor="middle" class="t-sub">Gmail API · IMAP · demo</text>
+  <text x="831" y="271" text-anchor="middle" class="t-sub">one parser: links → [L1]</text>
+
+  <rect x="578" y="340" width="94" height="62" rx="8" class="box b-accent"/>
+  <text x="625" y="366" text-anchor="middle" class="t-title">Scoring</text>
+  <text x="625" y="384" text-anchor="middle" class="t-sub">weights, verdict</text>
+
+  <rect x="690" y="340" width="100" height="62" rx="8" class="box b-py"/>
+  <text x="740" y="366" text-anchor="middle" class="t-title">Summariser</text>
+  <text x="740" y="384" text-anchor="middle" class="t-sub">schema, retry</text>
+
+  <rect x="812" y="340" width="110" height="62" rx="8" class="box b-py"/>
+  <text x="867" y="366" text-anchor="middle" class="t-title">LLM provider</text>
+  <text x="867" y="384" text-anchor="middle" class="t-sub">Gemini or Ollama</text>
+
+  <text x="750" y="470" text-anchor="middle" class="t-mono">swap with EMAIL_PROVIDER / LLM_PROVIDER</text>
+
+  <!-- Outside services -->
+  <rect x="985" y="219" width="94" height="58" rx="8" class="box b-ext"/>
+  <text x="1032" y="243" text-anchor="middle" class="t-title">Gmail API</text>
+  <text x="1032" y="261" text-anchor="middle" class="t-sub">read-only</text>
+
+  <rect x="985" y="342" width="94" height="58" rx="8" class="box b-ext"/>
+  <text x="1032" y="366" text-anchor="middle" class="t-title">Gemini API</text>
+  <text x="1032" y="384" text-anchor="middle" class="t-sub">free tier</text>
+
+  <!-- Edges -->
+  <line x1="164" y1="144" x2="227" y2="144" class="edge" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <text x="182" y="162" text-anchor="middle" class="t-edge">REST</text>
+
+  <line x1="335" y1="172" x2="335" y2="211" class="edge" marker-end="url(#ah)"/>
+  <text x="345" y="196" class="t-edge">start</text>
+
+  <line x1="335" y1="274" x2="335" y2="339" class="edge" marker-end="url(#ah)"/>
+  <text x="345" y="311" class="t-edge">save</text>
+
+  <line x1="335" y1="402" x2="335" y2="435" class="edge" marker-end="url(#ah)"/>
+  <text x="345" y="424" class="t-edge">SQL</text>
+
+  <polyline points="228,158 214,158 214,371 227,371" class="edge" marker-end="url(#ah)"/>
+
+  <polyline points="442,236 510,236 510,144 577,144" class="edge" marker-end="url(#ah)"/>
+  <text transform="translate(524 190) rotate(90)" text-anchor="middle" class="t-edge">HTTP · JSON</text>
+
+  <line x1="831" y1="172" x2="831" y2="211" class="edge" marker-end="url(#ah)"/>
+  <text x="839" y="196" class="t-edge">fetch</text>
+
+  <line x1="720" y1="172" x2="720" y2="339" class="edge" marker-end="url(#ah)"/>
+  <text x="728" y="318" class="t-edge">judge</text>
+
+  <line x1="922" y1="248" x2="984" y2="248" class="edge" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <text x="953" y="268" text-anchor="middle" class="t-edge">OAuth</text>
+
+  <line x1="790" y1="371" x2="811" y2="371" class="edge" marker-end="url(#ah)"/>
+
+  <line x1="922" y1="371" x2="984" y2="371" class="edge" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <text x="953" y="391" text-anchor="middle" class="t-edge">HTTPS</text>
+
+  <line x1="690" y1="371" x2="673" y2="371" class="edge" marker-end="url(#ah)"/>
+
+  <!-- Run order -->
+  <g class="step"><circle cx="196" cy="127" r="9"/><text x="196" y="131" text-anchor="middle">1</text></g>
+  <g class="step"><circle cx="318" cy="192" r="9"/><text x="318" y="196" text-anchor="middle">2</text></g>
+  <g class="step"><circle cx="532" cy="128" r="9"/><text x="532" y="132" text-anchor="middle">3</text></g>
+  <g class="step"><circle cx="953" cy="232" r="9"/><text x="953" y="236" text-anchor="middle">4</text></g>
+  <g class="step"><circle cx="556" cy="128" r="9"/><text x="556" y="132" text-anchor="middle">5</text></g>
+  <g class="step"><circle cx="953" cy="355" r="9"/><text x="953" y="359" text-anchor="middle">6</text></g>
+  <g class="step"><circle cx="681" cy="392" r="9"/><text x="681" y="396" text-anchor="middle">7</text></g>
+  <g class="step"><circle cx="318" cy="307" r="9"/><text x="318" y="311" text-anchor="middle">8</text></g>
+  <g class="step"><circle cx="214" cy="300" r="9"/><text x="214" y="304" text-anchor="middle">9</text></g>
+
+  <!-- Legend -->
+  <rect x="24" y="558" width="14" height="14" rx="3" class="zone-node"/>
+  <text x="46" y="569" class="t-legend">Node.js platform</text>
+  <rect x="178" y="558" width="14" height="14" rx="3" class="zone-py"/>
+  <text x="200" y="569" class="t-legend">Python agent</text>
+  <rect x="314" y="558" width="14" height="14" rx="3" class="zone-cloud"/>
+  <text x="336" y="569" class="t-legend">Outside service</text>
+  <rect x="470" y="558" width="14" height="14" rx="3" class="box b-accent"/>
+  <text x="492" y="569" class="t-legend">Decided in code, not by the LLM</text>
+  <g class="step"><circle cx="738" cy="565" r="9"/><text x="738" y="569" text-anchor="middle">1</text></g>
+  <text x="754" y="569" class="t-legend">Order of a run (see the README steps)</text>
+</svg>
