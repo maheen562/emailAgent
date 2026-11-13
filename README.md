@@ -20,6 +20,7 @@ It's built as two services: a **Node.js core platform** (REST API, SQLite storag
 - [How it works](#how-it-works)
 - [How a job is judged](#how-a-job-is-judged)
 - [Tech stack](#tech-stack)
+- [Prerequisites](#prerequisites)
 - [Quick start (demo, no accounts needed)](#quick-start-demo-no-accounts-needed)
 - [Judge new emails with Gemini](#judge-new-emails-with-gemini)
 - [Connect your Gmail](#connect-your-gmail)
@@ -110,9 +111,35 @@ The LLM reads the email and rates each job from 0 to 10 on six factors, with a s
 | Dashboard | Plain HTML, CSS and JavaScript (no build step), light and dark mode |
 | Tests | `pytest` and `node:test` |
 
+## Prerequisites
+
+**To run the demo** (no accounts or API keys):
+
+| Requirement | Version | Check with |
+|---|---|---|
+| [Python](https://www.python.org/downloads/) with `pip` | 3.11 or newer | `python --version` |
+| [Node.js](https://nodejs.org/) with `npm` | 22.13 or newer (the built-in SQLite needs it) | `node --version` |
+| [Git](https://git-scm.com/downloads) | any recent version | `git --version` |
+| A web browser | any modern one | |
+
+- **Operating system:** Windows, macOS or Linux.
+- **Disk space:** about 250 MB for dependencies. The Python packages take most of it.
+- **Ports:** 3000 (dashboard) and 8000 (agent) must be free. Both can be changed in the `.env` files.
+
+**To judge new emails, choose one LLM:**
+
+- **Gemini (default):** a free API key from [Google AI Studio](https://aistudio.google.com), with no credit card needed, and an internet connection. The free tier isn't offered in every country; AI Studio tells you when you create the key.
+- **Ollama (local):** [Ollama](https://ollama.com) installed, at least 8 GB of RAM (16 GB is more comfortable), and about 5 GB of disk space for the `qwen2.5:7b` model.
+
+**To read your own job alerts:**
+
+- **A Gmail account** that receives job alerts from LinkedIn, Indeed, Glassdoor or Rozee.pk.
+- **A free Google Cloud project** with the Gmail API enabled and a Desktop OAuth client (`credentials.json`). Setup takes about 15 minutes; see [Connect your Gmail](#connect-your-gmail).
+- **Or, for the IMAP backup:** 2-Step Verification turned on and a Gmail App Password.
+
 ## Quick start (demo, no accounts needed)
 
-You'll need **Python 3.11+** and **Node.js 22.13+**. Demo mode reads the fictional sample emails in [`agent/samples/`](agent/samples/), so you don't need Gmail or an API key to look around.
+Make sure you have the [prerequisites](#prerequisites) for the demo. Demo mode reads the fictional sample emails in [`agent/samples/`](agent/samples/), so you don't need Gmail or an API key to look around.
 
 **1. Start the Python agent** (terminal 1)
 
@@ -375,14 +402,6 @@ The tests never call a real LLM or Gmail. Both are replaced with fakes, so the s
 
 I built this with **Claude Code** as an AI pair programmer.
 
-- **My part:** I set the requirements and made the design calls:
-  - two services, Node.js and Python,
-  - read-only Gmail API access over passwords,
-  - free LLMs only,
-  - scoring decided in code rather than by the model,
-  - a Pakistan location filter once my real alerts turned out to be for Australia.
-
-  I approved each milestone before the next one started, and ran the agent against my own inbox.
 - **What testing on real data found:** a schema bug that Gemini rejected, overloaded and retired models, and confusing setup steps. Each was fixed with a regression test, and the troubleshooting table above comes from those problems.
 - **Process:** the work was done in milestones (see [PLAN.md](PLAN.md)), with small commits following [Chris Beams' commit message guidelines](https://cbea.ms/git-commit/).
 
